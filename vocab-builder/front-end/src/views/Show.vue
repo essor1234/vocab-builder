@@ -35,7 +35,7 @@
 
   export default{
     name: 'show',
-    data() {
+    data(){
         return {
             word: ''
         };
@@ -45,6 +45,7 @@
     }
   }
   </script>
+  
 
   <!-- styles declared here are applied to this component only -->
   <style scoped>

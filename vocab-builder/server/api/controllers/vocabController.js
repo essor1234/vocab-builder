@@ -17,9 +17,10 @@ exports.create_a_word = (req, res) => {
 };
 
 exports.read_a_word = (req, res) => {
-    Vocab.findById(req.params.wordId, (err, words)=>{
-        if (err) res.send(err);
-        res.json(words);
+    // console.log("Fetching word with ID:", typeof(req.params.wordId));
+    Vocab.findById(req.params.wordId, (err, word)=>{
+        if(err) res.send(err);
+        res.json(word);
     })
 };
 

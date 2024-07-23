@@ -10,8 +10,8 @@ const handleError = fn => (...params) =>
 // api object that exposes methods corresponding to the endpoints
 export const api = {
     getWord: handleError(async id => {
-        res = await axios.get(baseURL + id);
-        return res.data;
+        const res = await axios.get(baseURL + id);
+        return res.data; 
     }),
     getWords: handleError(async () => {
         const res = await axios.get(baseURL);
