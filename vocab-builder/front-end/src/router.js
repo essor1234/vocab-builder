@@ -24,7 +24,7 @@ export default new Router({
         },
         {
             path: '/words/new',
-            name: 'show',
+            name: 'new-word',
             component: New
         },
         {
