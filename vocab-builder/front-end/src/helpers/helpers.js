@@ -31,7 +31,7 @@ export const api = {
         return res.data;
     }),
     deleteWord: handleError(async id => {
-        const res = await axios.post(baseURL, payload);
+        const res = await axios.delete(baseURL+ id);
         return res.data;
     }),
     createWord: handleError(async payload => {
