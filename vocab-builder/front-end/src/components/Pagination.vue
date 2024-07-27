@@ -41,7 +41,7 @@ export default {
     goToPage(page) {
       this.$emit('update:currentPage', page);
     }
-  }
+  },
 };
 </script>
 

@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1>Words</h1>
+        <div>{{visualWords}}</div>
         <!-- Searching bar -->
-
     <input type="text" v-model="input" placeholder="Search words..." />
 
 
@@ -17,7 +17,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(word, i) in filteredList" :key="i">
+                <tr v-for="(word, i) in visualWords" :key="i"
+                 :visualWords="visualWords"
+                  :currentPage="currentPage">
                     <td>{{ word.english }}</td>
                     <td>{{ word.german }}</td>
                     <td>{{ word.french }}</td>
@@ -33,20 +35,30 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Pagination -->
+        <pagination :totalPages="totalPages" :currentPage="1"></pagination>
     </div>
 </template>
 <script>
     import {api} from '../helpers/helpers';
 
     import { Vue } from 'vue';
+    import Pagination from '../components/Pagination.vue'
 
 
     export default {
+  components: { Pagination },
         name: 'words',
         data(){
             return {
                 words: [],
+                // For getting user searching input
                 input: "",
+                // Pagination
+                perPage: 5,
+                currentPage: 1,
+                visualWords: []
             };
         },
         methods: {
@@ -58,24 +70,51 @@
                 const newWords = this.words.filter(word => word._id !== id);
                 this.words = newWords;
             },
+            updatePage(pageNum){
+            this.currentPage = pageNum;
+            this.updateVisualWords();
+            // this.filteredList();
+        },
+            updateVisualWords(){
+                const wordsToDisplay = this.filteredList.length ? this.filteredList : this.words;
+                const start = (this.currentPage - 1) * this.perPage;
+                const end = start + this.perPage;
+                this.visualWords = wordsToDisplay.slice(start, end);
+                if (this.visualWords.length == 0 && this.currentPage > 1){
+                    this.updatePage(this.currentPage - 1);
+                }
+            }
+
+
             
 
         },
         
         computed: {
              filteredList() {
-                // initialize as an empty string
+                // initialize as an empty string if this.input does not exsit
             const searchTerm = this.input ? this.input.toLowerCase() : '';
             return this.words.filter(word => 
                 (word.english.toLowerCase().includes(searchTerm) || 
                 word.french.toLowerCase().includes(searchTerm) || 
                 word.german.toLowerCase().includes(searchTerm))
             );
-        }
+            
+        },
+        totalPages(){
+                // Formular is getting total items devide by item per page, then ceiling it
+                return Math.ceil(this.words.length/this.perPage);
+            },
+        
         },
 
         async mounted(){
             this.words = await api.getWords();
+            this.updateVisualWords();
+
+        },
+        comments: {
+            'pagination' : Pagination
         }
     }
 </script>
@@ -110,20 +149,7 @@ input {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.item {
-  width: 350px;
-  margin: 0 auto 10px auto;
-  padding: 10px 20px;
-  color: white;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-}
 
-.fruit {
-  background-color: rgb(97, 62, 252);
-  cursor: pointer;
-}
 
 .error {
   background-color: tomato;
