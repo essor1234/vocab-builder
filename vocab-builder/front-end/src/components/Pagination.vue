@@ -17,16 +17,26 @@
 
 <script>
 export default {
+  name: 'Pagination',
   props: {
-    totalPages: {
-      type: Number,
+    words: {
+      type: Array,
       required: true
     },
     currentPage: {
       type: Number,
       required: true
-    }
+    },
+    pageSize: {
+      type: Number,
+      required: true
+    },
+    totalPages: {
+    type: Number,
+    required: true
+  }
   },
+
   methods: {
     prevPage() {
       if (this.currentPage > 1) {
@@ -41,9 +51,10 @@ export default {
     goToPage(page) {
       this.$emit('update:currentPage', page);
     }
-  },
+  }
 };
 </script>
+
 
 <style>
 .pagination {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Words</h1>
-        <div>{{visualWords}}</div>
+        <div>{{input}}</div>
         <!-- Searching bar -->
     <input type="text" v-model="input" placeholder="Search words..." />
 
@@ -37,7 +37,13 @@
         </table>
 
         <!-- Pagination -->
-        <pagination :totalPages="totalPages" :currentPage="1"></pagination>
+        <Pagination 
+      :currentPage="currentPage" 
+      :words="words"
+      :pageSize="perPage"
+      @update:currentPage="updatePage"
+      :totalPages="totalPages"
+    />
     </div>
 </template>
 <script>
@@ -61,6 +67,12 @@
                 visualWords: []
             };
         },
+        // used to watch the changes of the property, it will run the function whenerver property changes
+        watch: {
+            input() {
+            this.updateVisualWords();
+            },
+        },
         methods: {
             async onDestroy(id){
                 const sure = window.confirm("Are you sure?");
@@ -69,17 +81,16 @@
                 this.flash("Word deleted sucessfully!", 'success');
                 const newWords = this.words.filter(word => word._id !== id);
                 this.words = newWords;
+                this.updateVisualWords();
             },
             updatePage(pageNum){
             this.currentPage = pageNum;
             this.updateVisualWords();
-            // this.filteredList();
         },
             updateVisualWords(){
-                const wordsToDisplay = this.filteredList.length ? this.filteredList : this.words;
                 const start = (this.currentPage - 1) * this.perPage;
                 const end = start + this.perPage;
-                this.visualWords = wordsToDisplay.slice(start, end);
+                this.visualWords = this.filteredList.slice(start, end);
                 if (this.visualWords.length == 0 && this.currentPage > 1){
                     this.updatePage(this.currentPage - 1);
                 }
@@ -101,10 +112,14 @@
             );
             
         },
-        totalPages(){
-                // Formular is getting total items devide by item per page, then ceiling it
-                return Math.ceil(this.words.length/this.perPage);
-            },
+        totalPages() {
+            return Math.ceil(this.filteredList.length / this.perPage);
+    }
+
+        // totalPages(){
+        //         // Formular is getting total items devide by item per page, then ceiling it
+        //         return Math.ceil(this.words.length/this.perPage);
+        //     },
         
         },
 
