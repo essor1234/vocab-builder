@@ -62,7 +62,7 @@
                 // For getting user searching input
                 input: "",
                 // Pagination
-                perPage: 5,
+                perPage: 10,
                 currentPage: 1,
                 visualWords: []
             };

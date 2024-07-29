@@ -4,21 +4,21 @@
  
      <div class="ui labeled input fluid">
        <div class="ui label">
-         <i class="germany flag"></i> German
+         <i class="germany flag"></i>German
        </div>
        <input type="text" placeholder="Enter word..." v-model="word.german" />
      </div>
  
      <div class="ui labeled input fluid">
        <div class="ui label">
-         <i class="united kingdom flag"></i> English
+         <i class="united kingdom flag"></i>English
        </div>
        <input type="text" placeholder="Enter word..." v-model="word.english" />
      </div>
 
      <div class="ui labeled input fluid">
        <div class="ui label">
-         <i class="france flag"></i> French
+         <i class="france flag"></i>French
        </div>
        <input type="text" placeholder="Enter word..." v-model="word.french" />
      </div>

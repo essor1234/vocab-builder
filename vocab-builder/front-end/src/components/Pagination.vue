@@ -64,6 +64,7 @@ export default {
 
 button {
   padding: 0.5rem;
+  border-radius: 100%;
 }
 
 button.active {
