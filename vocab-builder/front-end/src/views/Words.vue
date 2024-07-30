@@ -125,6 +125,7 @@
 
         async mounted(){
             this.words = await api.getWords();
+            this.words.reverse(); // Display latest object first
             this.updateVisualWords();
 
         },
