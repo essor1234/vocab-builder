@@ -6,6 +6,7 @@ import Show from './views/Show.vue';
 import Edit from './views/Edit.vue';
 import Test from './views/Test.vue';
 import AboutMe from './views/AboutMe.vue';
+import UploadCSV from './components/UploadCSV.vue';
 
 Vue.use(Router);
 
@@ -48,6 +49,12 @@ export default new Router({
             path: '/manhQuy',
             name: 'aboutme',
             component: AboutMe
+        },
+        // uploadCSV
+        {
+            path: 'words/upload-csv',
+            name: 'uploadCSV',
+            component: UploadCSV
         }
 
     ]

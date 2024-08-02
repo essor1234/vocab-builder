@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Vocab = mongoose.model("Vocab");
+// npm csv
+const csv = require('csvtojson');
+const path = require('path');
+const multer = require('multer');
+
 
 exports.list_all_words = (req, res) => {
     Vocab.find({}, (err, words)=>{
@@ -45,9 +50,41 @@ exports.delete_a_word = (req, res) => {
         });
     });
 
-    
+
 };
 
+// Import by csv file
+
+// Configure multer for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+exports.upload_csv = (req, res) => {
+    const csvFilePath = req.file.path;
+    // const csvFilePath=req.body;
+    csv({
+        noheader: false,
+        delimiter: '\t'  // Specify tab as the delimiter
+    })
+    .fromFile(csvFilePath)
+    .then(async ( jsonObj) => {
+        // Insert each row into MongoDB
+        try {
+            console.log(jsonObj);
+            const result = await Vocab.insertMany(jsonObj);
+            res.status(200).json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error processing CSV file');
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error parsing CSV file');
+    });
+};
+
+ // Middleware to handle file upload
+ exports.uploadMiddleware = upload.single('file');
 
 
 
