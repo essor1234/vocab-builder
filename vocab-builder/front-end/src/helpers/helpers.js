@@ -42,6 +42,17 @@ export const api = {
         const res = await axios.put(baseURL + payload._id, payload);
         return res.data;
     }),
-    
+    uploadCSV: handleError(async file => {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await axios.post(baseURL + 'upload-csv', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return res.data;
+    })
+
+
     
 };

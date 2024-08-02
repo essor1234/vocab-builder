@@ -24,7 +24,12 @@ export default ({
     },
     methods: {
         createOrUpdate: async function(word){
-            await api.updateWord(word);
+            const res = await api.updateWord(word);
+            // CHeck if the words already exist
+            if(res.code == 11000){
+                this.flash(' Objects already exist', 'error');
+                return;
+            } 
             this.flash('Word updated sucessfully', 'success');
             this.$router.push(`/words/${word._id}`);
         }

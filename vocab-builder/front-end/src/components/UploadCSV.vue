@@ -6,7 +6,7 @@
  </template>
 
  <script>
- import axios from 'axios';
+ import {api} from '../helpers/helpers'
  
  export default({
     data() {
@@ -21,28 +21,26 @@
             this.file = event.target.files[0];
             console.log('Selected file:', this.file);
         },
-        uploadFile(){
+        async uploadFile(){
             // Check if there is selected file
             if (!this.file) {
             console.error('No file selected');
             return;
         }
-            const formData = new FormData();
-            formData.append('file', this.file);
+           try{
+            const res = await api.uploadCSV(this.file);
+            console.log(res);
+            // Check if data already exist
+            if(res.code == 11000){
+                this.flash('Some objects already exist', 'error');
+                return;
+            } 
+            this.flash('File uploaded successfully!','success');
 
-             axios.post('http://localhost:3000/words/upload-csv', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-            .then(response => {
-                console.log('File uploaded successfully:', response.data);
-            })
-       .catch(error => {
-         console.error('Error uploading file:', error.response ? error.response.data : error.message);
-       });
-    
-   
+
+           }catch(error){
+                console.error('Error uploading file:', error);           
+                }
         },
     },
  })
@@ -55,7 +53,7 @@
     gap: 10px;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     height: 200px;
     padding: 20px;
     border-radius: 10px;
