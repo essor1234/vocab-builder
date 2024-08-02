@@ -37,7 +37,7 @@
         </table>
 
         <!-- Pagination -->
-        <Pagination 
+        <Pagination
       :currentPage="currentPage" 
       :words="words"
       :pageSize="perPage"
