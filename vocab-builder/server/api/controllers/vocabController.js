@@ -61,23 +61,25 @@ const upload = multer({ dest: 'uploads/' });
 exports.upload_csv = (req, res) => {
     const csvFilePath = req.file.path;
 
-    // Read the first line to detect the delimiter
+    // read CSV file as a text string
     fs.readFile(csvFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Error reading CSV file');
         }
 
-        // Get the first line
+        // Split the content to array then Get the first line
         const firstLine = data.split('\n')[0];
 
         // Determine the delimiter based on the first line
+        // check if first line use tab character or comma for seperate
         const delimiter = firstLine.includes('\t') ? '\t' : ',';
 
         csv({
-            noheader: false,
+            noheader: false, // csv file has header
             delimiter: delimiter // Use the detected delimiter
         })
+        // read csv file
         .fromFile(csvFilePath)
         .then(async (jsonObj) => {
             // Insert each row into MongoDB

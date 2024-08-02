@@ -70,6 +70,7 @@
         // used to watch the changes of the property, it will run the function whenerver property changes
         watch: {
             input() {
+                // Update the display word instantly whike searching
             this.updateVisualWords();
             },
         },
@@ -96,9 +97,6 @@
                 }
             }
 
-
-            
-
         },
         
         computed: {
@@ -116,22 +114,16 @@
             return Math.ceil(this.filteredList.length / this.perPage);
     }
 
-        // totalPages(){
-        //         // Formular is getting total items devide by item per page, then ceiling it
-        //         return Math.ceil(this.words.length/this.perPage);
-        //     },
-        
         },
 
         async mounted(){
             this.words = await api.getWords();
             this.words.reverse(); // Display latest object first
+            // Display all the words
             this.updateVisualWords();
 
         },
-        comments: {
-            'pagination' : Pagination
-        }
+        
     }
 </script>
 
