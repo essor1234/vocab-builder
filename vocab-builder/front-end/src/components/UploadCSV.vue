@@ -1,9 +1,22 @@
 <template>
-   <div>
-     <input type="file" @change="handleFileUpload" />
-     <button @click="uploadFile">Upload</button>
-   </div>
- </template>
+  <div class="upload-container">
+    <label class="upload-label" for="fileUpload">
+      <input 
+        type="file" 
+        id="fileUpload" 
+        class="upload-input" 
+        @change="handleFileUpload" 
+      />
+      <span class="upload-button">
+        <i class="fa fa-upload"></i>
+        Choose File
+      </span>
+      <span class="upload-filename" v-if="file">{{ file.name }}</span>
+    </label>
+    <button class="upload-submit" @click="uploadFile">Upload</button>
+  </div>
+</template>
+
 
  <script>
  import {api} from '../helpers/helpers'
@@ -46,37 +59,57 @@
  })
  </script>
 
- <style>
-  .drop-container {
-    position: relative;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; 
-    height: 200px;
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px dashed #555;
-    color: #444;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
-  }
+ <style scoped>
+.upload-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
 
-  .drop-container:hover {
-    background: #eee;
-    border-color: #111;
-  }
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .drop-container:hover .drop-title {
-    color: #222;
-  }
+.upload-input {
+  display: none;
+}
 
-  .drop-title {
-    color: #444;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    transition: color 0.2s ease-in-out;
-  }
+.upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
+}
+
+.upload-filename {
+  font-size: 14px;
+  color: #333;
+}
+
+.upload-submit {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-submit:hover {
+  background-color: #218838;
+}
 </style>

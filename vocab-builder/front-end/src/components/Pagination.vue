@@ -1,8 +1,15 @@
 <template>
   <div class="pagination">
-    <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-    
+    <button 
+      class="pagination-button" 
+      @click="prevPage" 
+      :disabled="currentPage === 1"
+    >
+      Previous
+    </button>
+
     <button
+      class="pagination-button"
       v-for="page in totalPages"
       :key="page"
       @click="goToPage(page)"
@@ -10,10 +17,17 @@
     >
       {{ page }}
     </button>
-    
-    <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+
+    <button 
+      class="pagination-button" 
+      @click="nextPage" 
+      :disabled="currentPage === totalPages"
+    >
+      Next
+    </button>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -56,19 +70,40 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .pagination {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
 }
 
-button {
-  padding: 0.5rem;
-  border-radius: 100%;
+.pagination-button {
+  padding: 10px 20px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-button.active {
+.pagination-button:hover:not(.active) {
+  background-color: #333;
+  color: white;
+}
+
+.pagination-button:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #999;
+  border-color: #ccc;
+}
+
+.pagination-button.active {
   background-color: #007bff;
   color: white;
+  border-color: #007bff;
 }
 </style>

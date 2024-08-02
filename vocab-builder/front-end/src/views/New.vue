@@ -2,7 +2,7 @@
     <div>
         <h1>New Word</h1>
         <word-form @createOrUpdate="createOrUpdate"></word-form>
-        <div>
+        <div class="uploadCSV">
             <upload-csv></upload-csv>
 
         </div>
@@ -34,3 +34,9 @@ export default ({
     }
 })
 </script>
+
+<style scoped>
+.uploadCSV{
+    margin-top: 20px;
+}
+</style>
