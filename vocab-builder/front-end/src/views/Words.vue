@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Words</h1>
-        <div>{{input}}</div>
+        <!-- <div>{{input}}</div> -->
         <!-- Searching bar -->
     <input type="text" v-model="input" placeholder="Search words..." />
 
