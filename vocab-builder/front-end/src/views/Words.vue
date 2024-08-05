@@ -84,6 +84,7 @@
                 this.words = newWords;
                 this.updateVisualWords();
             },
+            // pagination
             updatePage(pageNum){
             this.currentPage = pageNum;
             this.updateVisualWords();
